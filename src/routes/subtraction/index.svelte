@@ -3,7 +3,10 @@
     import {answerClick} from "./game.js";
     import {newQuestion} from "./game.js";
 
+    import Start from '../../components/Start.svelte';
+
     let questionSvelte = question;
+    let start = false;
 
     function answerClickSvelte(i) {
         answerClick(i)
@@ -14,13 +17,17 @@
         newQuestion()
         questionSvelte = question;
     }
+
+    function startPress() {
+        start = true;
+    }
 </script>
 
 <style>
     .Body {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 100px 300px
+        grid-template-rows: 10em 300px
     }
 
     .Game {
@@ -38,8 +45,8 @@
     button {
         transform: scale(2);
         background-color: white; /* Green */
-        border: 2px solid orange;
-        color: orange;
+        border: 2px solid rgb(255,62,0);
+        color: rgb(255,62,0);
         padding: 15px 32px;
         text-align: center;
         text-decoration: none;
@@ -54,12 +61,12 @@
         grid-row: 2;
         grid-column: 2 / 4;
         padding: 20px 100px;
-        border: 3px solid orange;
+        border: 3px solid rgb(255,62,0);
 
     }
 
     button:hover {
-        background-color: orange;
+        background-color: rgb(255,62,0);
         color: white;
     }
 
@@ -77,6 +84,11 @@
     .Question {
         font-size: 5em;
     }
+
+    .StartButton {
+        grid-column: 1 / 4;
+        grid-row: 2;
+    }
 </style>
 
 <svelte:head>
@@ -84,6 +96,10 @@
 </svelte:head>
 
 <div class='Body'>
+    {#if start == false}
+    <button on:click={startPress} align='center' class='StartButton'>Start Game</button>
+
+    {:else if start == true}
     <div class='Game'>
         <p class='Question' align='center'>{questionSvelte.question}</p>
 
@@ -102,4 +118,5 @@
 
     <div class="Stats">
     </div>
+    {/if}
 </div>
